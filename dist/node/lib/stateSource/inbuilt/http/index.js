@@ -157,12 +157,7 @@ function requestOptions(method, source, options) {
 
 function beforeRequest(source, req) {
   _.each(getHooks("before"), function (hook) {
-    try {
-      hook.before.call(source, req);
-    } catch (e) {
-      log.error("Failed to execute hook before http request", e, hook);
-      throw e;
-    }
+    hook.before.call(source, req);
   });
 }
 
@@ -171,12 +166,7 @@ function afterRequest(source, res) {
 
   _.each(getHooks("after"), function (hook) {
     var execute = function execute(res) {
-      try {
-        return hook.after.call(source, res);
-      } catch (e) {
-        log.error("Failed to execute hook after http response", e, hook);
-        throw e;
-      }
+      return hook.after.call(source, res);
     };
 
     if (current) {
